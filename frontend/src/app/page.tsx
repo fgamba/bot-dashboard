@@ -86,14 +86,50 @@ export default async function DashboardPage() {
 
         </div>
 
-        {/* Explicación de la Arquitectura */}
-        <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
-          <h2 className="text-xl font-bold mb-4 text-gray-200">¿Cómo funciona esto? (Headless Architecture)</h2>
-          <ul className="list-disc pl-5 text-gray-400 space-y-2 text-sm">
-             <li>Este componente (React Server Component) le pide los datos a tu <strong>WordPress REST API</strong> en el momento exacto en que alguien carga la página.</li>
-             <li>Como ves arriba a la derecha, si WordPress no responde, la UI no se cae; muestra los datos cacheados o simulados con un indicador visual (Puntito naranja).</li>
-             <li>Todo el estilo oscuro y premium que ves (bordes dinámicos al hacer hover, gradientes, tipografía) está hecho nativamente con <strong>TailwindCSS</strong> sin tocar ni un archivo `.css`.</li>
-          </ul>
+        {/* Historial de Trades */}
+        <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden shadow-lg">
+          <div className="border-b border-gray-800 p-6">
+            <h2 className="text-xl font-bold text-gray-200 flex items-center gap-2">
+              <span className="text-gray-400">⏱️</span> Últimas Evaluaciones del Motor
+            </h2>
+          </div>
+          
+          <div className="overflow-x-auto">
+            {status.recent_trades && status.recent_trades.length > 0 ? (
+              <table className="w-full text-left text-sm text-gray-400">
+                <thead className="bg-gray-950/50 text-xs uppercase text-gray-500 border-b border-gray-800">
+                  <tr>
+                    <th className="px-6 py-4 font-medium">Fecha/Hora</th>
+                    <th className="px-6 py-4 font-medium">Par</th>
+                    <th className="px-6 py-4 font-medium">Estado</th>
+                    <th className="px-6 py-4 font-medium">Detalle (Filtros Técnicos)</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-800/50">
+                  {status.recent_trades.map((trade: any, index: number) => (
+                    <tr key={index} className="hover:bg-gray-800/30 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap font-mono text-xs">{trade.timestamp}</td>
+                      <td className="px-6 py-4 font-bold text-gray-300">{trade.symbol}</td>
+                      <td className="px-6 py-4">
+                        <span className={`px-2 py-1 rounded text-xs font-medium border ${
+                          trade.status === 'EJECUTADO' 
+                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                            : 'bg-red-500/10 text-red-400 border-red-500/20'
+                        }`}>
+                          {trade.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-xs text-gray-500">{trade.detail}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="p-8 text-center text-gray-500 text-sm">
+                Esperando a que el bot envíe el primer reporte de operaciones...
+              </div>
+            )}
+          </div>
         </div>
 
       </div>
