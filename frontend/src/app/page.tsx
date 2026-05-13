@@ -1,4 +1,5 @@
 import React from 'react';
+import ChartWidget from './components/ChartWidget';
 
 // Apuntamos al WordPress local de Docker (puerto 8089)
 const WP_API_URL = process.env.NEXT_PUBLIC_WP_API_URL || 'http://localhost:8089/wp-json/fortress/v1/status';
@@ -84,6 +85,56 @@ export default async function DashboardPage() {
             </div>
           </div>
 
+        </div>
+
+        {/* Gráfico y Estadísticas de Trades (Mock temporal hasta conectar Binance) */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <div className="lg:col-span-2 flex flex-col">
+            <ChartWidget data={status.balance_history || []} />
+          </div>
+          
+          <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden shadow-lg h-full">
+            <div className="border-b border-gray-800 p-6">
+              <h2 className="text-lg font-bold text-gray-200">Rendimiento Histórico</h2>
+              <p className="text-xs text-gray-500 mt-1">Requiere actualización de Python (Datos Mockeados)</p>
+            </div>
+            <div className="p-6 space-y-6">
+              <div>
+                <div className="flex justify-between text-sm mb-1">
+                  <span className="text-gray-400">Total Trades Completados</span>
+                  <span className="font-bold text-gray-200">24</span>
+                </div>
+              </div>
+              
+              <div>
+                <div className="flex justify-between text-sm mb-1">
+                  <span className="text-gray-400">Ganadoras</span>
+                  <span className="font-bold text-emerald-400">18 (75%)</span>
+                </div>
+                <div className="flex justify-between text-xs mt-1">
+                  <span className="text-gray-500">Beneficio Bruto</span>
+                  <span className="text-emerald-500/80">+$45.20</span>
+                </div>
+                <div className="w-full bg-gray-800 h-1.5 rounded-full mt-2">
+                  <div className="bg-emerald-500 h-full rounded-full" style={{width: '75%'}}></div>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between text-sm mb-1">
+                  <span className="text-gray-400">Perdedoras</span>
+                  <span className="font-bold text-red-400">6 (25%)</span>
+                </div>
+                <div className="flex justify-between text-xs mt-1">
+                  <span className="text-gray-500">Pérdida Bruta</span>
+                  <span className="text-red-500/80">-$12.80</span>
+                </div>
+                <div className="w-full bg-gray-800 h-1.5 rounded-full mt-2">
+                  <div className="bg-red-500 h-full rounded-full" style={{width: '25%'}}></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Historial de Trades */}
