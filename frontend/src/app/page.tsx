@@ -114,7 +114,9 @@ export default async function DashboardPage() {
                         <span className={`px-2 py-1 rounded text-xs font-medium border ${
                           trade.status === 'EJECUTADO' 
                             ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
-                            : 'bg-red-500/10 text-red-400 border-red-500/20'
+                            : trade.status === 'FALLIDO'
+                              ? 'bg-red-500/10 text-red-400 border-red-500/20'
+                              : 'bg-gray-500/10 text-gray-400 border-gray-500/20'
                         }`}>
                           {trade.status}
                         </span>
