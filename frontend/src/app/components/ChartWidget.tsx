@@ -41,7 +41,7 @@ export default function ChartWidget({ data }: { data: any[] }) {
             <Tooltip 
               contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.5rem', color: '#fff' }}
               itemStyle={{ color: '#10b981' }}
-              formatter={(value: number) => [`$${value.toFixed(2)}`, 'Balance']}
+              formatter={(value: any) => [`$${Number(value).toFixed(2)}`, 'Balance']}
               labelStyle={{ color: '#9ca3af', marginBottom: '0.25rem' }}
             />
             <Line type="monotone" dataKey="balance" stroke="#10b981" strokeWidth={3} dot={{ r: 4, fill: '#10b981', strokeWidth: 0 }} activeDot={{ r: 6 }} />
