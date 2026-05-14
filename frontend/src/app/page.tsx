@@ -96,41 +96,41 @@ export default async function DashboardPage() {
           <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden shadow-lg h-full">
             <div className="border-b border-gray-800 p-6">
               <h2 className="text-lg font-bold text-gray-200">Rendimiento Histórico</h2>
-              <p className="text-xs text-gray-500 mt-1">Requiere actualización de Python (Datos Mockeados)</p>
+              <p className="text-xs text-gray-500 mt-1">Conectado en tiempo real con Binance</p>
             </div>
             <div className="p-6 space-y-6">
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-400">Total Trades Completados</span>
-                  <span className="font-bold text-gray-200">24</span>
+                  <span className="text-gray-400">Total Trades Cerrados</span>
+                  <span className="font-bold text-gray-200">{status.pnl_stats?.total_trades || 0}</span>
                 </div>
               </div>
               
               <div>
                 <div className="flex justify-between text-sm mb-1">
                   <span className="text-gray-400">Ganadoras</span>
-                  <span className="font-bold text-emerald-400">18 (75%)</span>
+                  <span className="font-bold text-emerald-400">{status.pnl_stats?.win_count || 0} ({status.pnl_stats?.win_rate || 0}%)</span>
                 </div>
                 <div className="flex justify-between text-xs mt-1">
                   <span className="text-gray-500">Beneficio Bruto</span>
-                  <span className="text-emerald-500/80">+$45.20</span>
+                  <span className="text-emerald-500/80">+${status.pnl_stats?.gross_profit || 0}</span>
                 </div>
                 <div className="w-full bg-gray-800 h-1.5 rounded-full mt-2">
-                  <div className="bg-emerald-500 h-full rounded-full" style={{width: '75%'}}></div>
+                  <div className="bg-emerald-500 h-full rounded-full" style={{width: `${status.pnl_stats?.win_rate || 0}%`}}></div>
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between text-sm mb-1">
                   <span className="text-gray-400">Perdedoras</span>
-                  <span className="font-bold text-red-400">6 (25%)</span>
+                  <span className="font-bold text-red-400">{status.pnl_stats?.loss_count || 0} ({status.pnl_stats?.loss_rate || 0}%)</span>
                 </div>
                 <div className="flex justify-between text-xs mt-1">
                   <span className="text-gray-500">Pérdida Bruta</span>
-                  <span className="text-red-500/80">-$12.80</span>
+                  <span className="text-red-500/80">${status.pnl_stats?.gross_loss || 0}</span>
                 </div>
                 <div className="w-full bg-gray-800 h-1.5 rounded-full mt-2">
-                  <div className="bg-red-500 h-full rounded-full" style={{width: '25%'}}></div>
+                  <div className="bg-red-500 h-full rounded-full" style={{width: `${status.pnl_stats?.loss_rate || 0}%`}}></div>
                 </div>
               </div>
             </div>
