@@ -185,6 +185,54 @@ export default async function DashboardPage() {
           </div>
         </div>
 
+        {/* Historial de Trades Cerrados */}
+        <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden shadow-lg mt-8">
+          <div className="border-b border-gray-800 p-6">
+            <h2 className="text-xl font-bold text-gray-200 flex items-center gap-2">
+              <span className="text-gray-400">💰</span> Operaciones Cerradas (Binance Realized PnL)
+            </h2>
+          </div>
+          
+          <div className="overflow-x-auto">
+            {status.pnl_stats?.latest_trades && status.pnl_stats.latest_trades.length > 0 ? (
+              <table className="w-full text-left text-sm text-gray-400">
+                <thead className="bg-gray-950/50 text-xs uppercase text-gray-500 border-b border-gray-800">
+                  <tr>
+                    <th className="px-6 py-4 font-medium">Fecha/Hora</th>
+                    <th className="px-6 py-4 font-medium">Par</th>
+                    <th className="px-6 py-4 font-medium">Estado</th>
+                    <th className="px-6 py-4 font-medium">PnL Realizado</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-800/50">
+                  {status.pnl_stats.latest_trades.map((trade: any, index: number) => (
+                    <tr key={index} className="hover:bg-gray-800/30 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap font-mono text-xs">{trade.timestamp}</td>
+                      <td className="px-6 py-4 font-bold text-gray-300">{trade.symbol}</td>
+                      <td className="px-6 py-4">
+                        <span className={`px-2 py-1 rounded text-xs font-medium border ${
+                          trade.status === 'GANANCIA' 
+                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                            : 'bg-red-500/10 text-red-400 border-red-500/20'
+                        }`}>
+                          {trade.status}
+                        </span>
+                      </td>
+                      <td className={`px-6 py-4 text-sm font-bold ${trade.pnl > 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                        {trade.pnl > 0 ? '+' : ''}{trade.pnl.toFixed(2)} USDT
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="p-8 text-center text-gray-500 text-sm">
+                No hay operaciones cerradas recientes en la cuenta.
+              </div>
+            )}
+          </div>
+        </div>
+
       </div>
     </main>
   );
